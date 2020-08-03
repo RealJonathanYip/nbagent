@@ -1,0 +1,29 @@
+<server>
+    <net_workers>
+        <worker name="network_task_flag" size="100" />
+    </net_workers>
+    <total>500000</total>
+    <concurrency>200</concurrency>
+    <max_total>500000</max_total>
+    <max_concurrency>10</max_concurrency>
+    <delta_total>500</delta_total>
+    <delta_concurrency>100</delta_concurrency>
+    <init_conn_num>50</init_conn_num>
+    <max_conn_num>100</max_conn_num>
+    <good_bye_timeout_s>60</good_bye_timeout_s>
+    <agents>
+<!--        <agent ip="47.56.81.232" port="8810" />-->
+        <agent ip="172.26.65.16" port="8810" />
+<!--        <agent ip="172.26.65.23" port="8810" />-->
+    </agents>
+    <secret_key>node</secret_key>
+
+    <log>
+        <target>asyncfile</target>
+        <encode>json</encode>
+<!--        <path>/data/yy/log/nbagent-client-benchmark-test</path>-->
+        <path>./log/nbagent-client-benchmark-test/</path>
+<!--        <path>.\\log\\nbagent-client-benchmark-test</path>-->
+        <level>debug</level>
+    </log>
+</server>

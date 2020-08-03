@@ -1,0 +1,33 @@
+<server>
+    <log_mode>asyncfile</log_mode>
+    <log_level>info</log_level>
+    <log_path>./nbagent_log/</log_path>
+    <secret_key>node</secret_key>
+    <workers>
+        <worker name="node_introduce" size="100" queue="100"/>
+        <worker name="node_manager" size="100" queue="100"/>
+        <worker name="tcp_msg" size="100" queue="100"/>
+        <worker name="node_connect" size="100" queue="100"/>
+        <worker name="network_task_flag" size="100" queue="100"/>
+    </workers>
+    <host>0.0.0.0</host>
+    <node>
+        <name>node_1</name>
+        <port>8900</port>
+        <neighbours>
+            <!--            <info name="" ip="" port="" agent_port=""></info>-->
+        </neighbours>
+        <neighbour_max_connection>10</neighbour_max_connection>
+    </node>
+    <agent>
+        <name>node_1</name>
+        <port>8800</port>
+        <client_max_connection>300010</client_max_connection>
+    </agent>
+
+    <timeout_check_interval>10</timeout_check_interval> <!-- seconds -->
+    <connect_timeout>60</connect_timeout> <!-- seconds -->
+    <sign_timeout>5</sign_timeout> <!-- seconds -->
+    <client_timeout>15</client_timeout> <!-- seconds -->
+    <stop_timeout>60</stop_timeout> <!-- seconds -->
+</server>

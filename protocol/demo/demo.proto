@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package demo;
+
+message TestMsgReq {
+    uint32 testNumber = 1;
+    string testString = 2;
+}
+
+message TestMsgRsp {
+    string testReply = 1;
+}
+
+service Demo {
+    rpc TestHaha(TestMsgReq) returns (TestMsgRsp) {};
+}

@@ -1,0 +1,48 @@
+{{- $file_package := .Package -}}
+// auto-generate by `gen` don't edit
+
+package {{ $file_package}}
+
+import (
+	"context"
+
+	"git.yayafish.com/nbagent/client"
+	//"github.com/micro/protobuf/proto"
+)
+
+//client call
+    {{ range $serviceIndex, $service := .Service }}
+func NewPB{{ firstUpperCase $service.Name}}Client(ptrClient *client.Client) PB{{ firstUpperCase $service.Name}}Client {
+	return PB{{ firstUpperCase $service.Name}}Client{
+		ptrClient: ptrClient,
+	}
+}
+
+type PB{{ firstUpperCase $service.Name}}Client struct {
+	ptrClient *client.Client
+}
+         {{- range $index, $method := $service.Method }}
+func (ptrClient *PB{{ firstUpperCase $service.Name}}Client) Call{{ $method.Name}}(szUri string, nTimeoutMs int64,
+    ptrReq *{{ $method.InputType}}, ptrRsp *{{ $method.OutputType}}) error {
+	return ptrClient.ptrClient.SyncCall(szUri, ptrReq, ptrRsp, nTimeoutMs)
+}
+         {{- end }}
+     {{- end }}
+
+//service call
+    {{ range $serviceIndex, $service := .Service }}
+func NewPB{{ firstUpperCase $service.Name}}ServiceHandler(ptrClient *client.Client) PB{{ firstUpperCase $service.Name}}ServiceHandler {
+	return PB{{ firstUpperCase $service.Name}}ServiceHandler{
+		ptrClient: ptrClient,
+	}
+}
+
+type PB{{ firstUpperCase $service.Name}}ServiceHandler struct {
+	ptrClient *client.Client
+}
+
+func (ptrService *PB{{ firstUpperCase $service.Name}}ServiceHandler) RegisterServiceHandler(szUri string,
+ fnHandler func(byteData []byte, ctx context.Context) []byte) error {
+	return ptrService.ptrClient.HandleRpc(szUri, fnHandler)
+}
+    {{- end }}

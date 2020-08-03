@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package node;
+
+enum ResultCode {
+    SUCCESS = 0;
+    ERROR = 1;
+    SIGN_VALIDATE_FAIL = 401;
+    SIGN_TIMEOUT = 402;
+    ENTRY_NOT_FOUND = 403;
+    ENTRY_INVALIDATE = 404;
+    CALL_YOUR_SELF = 405;
+    CALL_STACK_ERROR = 406;
+    NODE_NOT_EXIST = 407;
+    STACK_EMPTY = 408;
+}
+
+enum EntryType {
+    INVALIDATE = 0;
+    HTTP = 1;
+    RPC = 2;
+}
+
+enum RequestMode {
+    DEFAULT = 0;
+    LOCAL_FORCE = 2;
+    LOCAL_BETTER = 3;
+}
+
+message SayHelloReq {
+    NodeInfo NodeInfo = 1;
+    string Sign = 2;
+    int64 TimeStamp = 3;
+    uint64 DataVersion = 4;
+}
+
+message SayHelloRsp {
+    ResultCode Result = 1;
+    string Sign = 2;
+    int64 TimeStamp = 3;
+    NodeInfo NodeInfo = 4;
+    uint64 DataVersion = 5;
+}
+
+message NodeInfo {
+    string Name = 1;
+    string IP = 2;
+    uint32 Port = 3;
+    uint64 InstanceID = 4;
+    uint32 AgentPort = 5;
+}
+
+message EntryInfo {
+    string URI = 1;
+    EntryType EntryType = 2;
+    bool IsNew = 3;
+}
+
+message NewEntryNotify {
+    repeated EntryInfo EntryInfo = 1;
+    uint64 DataVersion = 2;
+}
+
+message GetEntryReq {
+}
+
+message GetEntryResp {
+    repeated EntryInfo EntryInfo = 1;
+    uint64 DataVersion = 2;
+}
+
+message SayGoodbyeNotify {
+}
+
+message KeepAliveNotify {
+    uint64 DataVersion = 1;
+    repeated NodeInfo Neighbours = 2;
+}
+
+message RpcCallReq {
+    bytes Data = 1;
+    string URI = 2;
+    repeated string Caller = 3;
+    RequestMode RequestMode = 4;
+    string Key = 5;
+    EntryType EntryType = 6;
+}
+
+message RpcCallResp {
+    ResultCode Result = 1;
+    bytes Data = 2;
+    string URI = 3;
+    repeated string Caller = 4;
+    EntryType EntryType = 5;
+}

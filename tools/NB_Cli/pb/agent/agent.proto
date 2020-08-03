@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package agent;
+
+enum ResultCode {
+    SUCCESS = 0;
+    ERROR = 1;
+    SIGN_VALIDATE_FAIL = 401;
+    SIGN_TIMEOUT = 402;
+    ENTRY_NOT_FOUND = 403;
+}
+
+enum EntryType {
+    INVALIDATE = 0;
+    HTTP = 1;
+    RPC = 2;
+}
+
+message EntryInfo {
+    string URI = 1;
+    EntryType EntryType = 2;
+}
+
+message AgentRegisterReq {
+    string InstanceID = 1;
+    repeated EntryInfo AryEntry = 2;
+    string Sign = 3;
+    int64 TimeStamp = 4;
+}
+
+message AgentRegisterRsp {
+    ResultCode Result = 1;
+    string Sign = 2;
+    int64 TimeStamp = 3;
+}
+
+message AgentUnRegisterReq {
+    string InstanceID = 1;
+    repeated EntryInfo AryEntry = 2;
+    string Sign = 3;
+    int64 TimeStamp = 4;
+}
+
+message AgentInfo {
+    string Name = 1;
+    string IP = 2;
+    uint32 Port = 3;
+}
+
+message AgentKeepAliveNotify {
+    repeated EntryInfo AryEntry = 1;
+}
+
+message AgentKeepAliveRsp {
+    repeated AgentInfo AryAgent = 1;
+}
+
+message AgentEntryCheckReq {
+    string URI = 1;
+    EntryType EntryType = 2;
+}
+
+message AgentEntryCheckRsp {
+    ResultCode Result = 1;
+}
+
+service Agent {
+    rpc Register(AgentRegisterReq) returns (AgentRegisterRsp) {};
+    rpc KeepAlive(AgentKeepAliveRsp) returns (AgentKeepAliveRsp) {};
+    rpc EntryCheck(AgentEntryCheckReq) returns (AgentEntryCheckRsp) {};
+}

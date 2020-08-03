@@ -1,0 +1,14 @@
+<server>
+    <net_workers>
+        <worker name="network_task_flag" size="100" />
+    </net_workers>
+<!--    <host>47.56.81.232</host>-->
+    <host>172.26.65.16</host>
+<!--    <host>172.26.65.23</host>-->
+    <port>8810</port>
+    <delay>0</delay>
+    <init_conn_num>1000</init_conn_num>
+    <max_conn_num>1100</max_conn_num>
+    <good_bye_timeout_s>60</good_bye_timeout_s>
+    <secret_key>node</secret_key>
+</server>

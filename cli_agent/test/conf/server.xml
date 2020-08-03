@@ -1,0 +1,29 @@
+<server>
+    <log_mode>stdout</log_mode>
+    <log_level>debug</log_level>
+    <log_path>..\log\</log_path>
+    <secret_key>node_1</secret_key>
+    <workers>
+        <worker name="node_introduce" size="100" queue="100" />
+        <worker name="node_manager" size="100" queue="100" />
+        <worker name="tcp_msg" size="100" queue="100" />
+        <worker name="node_connect" size="100" queue="100" />
+        <worker name="network_task_flag" size="100" queue="100" />
+    </workers>
+    <host>0.0.0.0</host>
+    <node>
+        <name>node_1</name>
+        <port>8900</port>
+        <neighbours>
+<!--            <info name="" ip="" port="" agent_port=""></info>-->
+        </neighbours>
+    </node>
+   <agent>
+       <name>node_1</name>
+       <port>8800</port>
+   </agent>
+   <timeout_check_interval>60</timeout_check_interval> <!-- seconds -->
+   <connect_timeout>60</connect_timeout> <!-- seconds -->
+   <sign_timeout>5</sign_timeout> <!-- seconds -->
+   <client_timeout>60</client_timeout> <!-- seconds -->
+</server>
